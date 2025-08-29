@@ -1,7 +1,9 @@
 package com.senac.games.controller;
 
 import com.senac.games.dto.request.ParticipanteDTORequest;
+import com.senac.games.dto.request.ParticipanteDTOUpdateRequest;
 import com.senac.games.dto.response.ParticipanteDTOResponse;
+import com.senac.games.dto.response.ParticipanteDTOUpdateResponse;
 import com.senac.games.entity.Participante;
 import com.senac.games.service.ParticipanteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,10 +42,25 @@ public class ParticipanteController {
             return ResponseEntity.ok(participante);
         }
     }
-
     @PostMapping("/criar")
     @Operation(summary = "Criar novo participante", description = "Endpoint para criar um novo registro de participante")
     public ResponseEntity<ParticipanteDTOResponse> criarParticipante(@Valid @RequestBody ParticipanteDTORequest participante){
         return ResponseEntity.status(HttpStatus.CREATED).body(participanteService.criarParticipante(participante));
+    }
+
+    @PutMapping("/atualizar/{participanteId}")
+    @Operation(summary = "Atualizar todos os dados do participante",
+            description = "Endpoint para atualizar participante")
+    public ResponseEntity<ParticipanteDTOResponse>
+    atualizarParticipante(@PathVariable("participanteId") Integer participanteId,
+                          @RequestBody ParticipanteDTORequest participante){
+        return ResponseEntity.ok(this.participanteService.atualizarParticipante(participanteId,participante));
+    }
+
+    @PatchMapping("/atualizarStatus/{participanteid}")
+    @Operation(summary = "Atualizar o campo status", description = "Atualiza o status do participante")
+    public ResponseEntity<ParticipanteDTOUpdateResponse> atualizarStatusParticipante(@PathVariable("participanteId") Integer participanteId,
+            @RequestBody ParticipanteDTOUpdateRequest participanteStatus){
+        return ResponseEntity.ok(this.participanteService.atualizarStatus(participanteId,participanteStatus));
     }
 }

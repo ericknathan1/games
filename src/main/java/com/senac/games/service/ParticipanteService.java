@@ -1,7 +1,9 @@
 package com.senac.games.service;
 
 import com.senac.games.dto.request.ParticipanteDTORequest;
+import com.senac.games.dto.request.ParticipanteDTOUpdateRequest;
 import com.senac.games.dto.response.ParticipanteDTOResponse;
+import com.senac.games.dto.response.ParticipanteDTOUpdateResponse;
 import com.senac.games.entity.Participante;
 import com.senac.games.entity.Patrocinador;
 import com.senac.games.repository.ParticipanteRepository;
@@ -17,13 +19,14 @@ import java.util.List;
 public class ParticipanteService {
 
     private final ParticipanteRepository participanteRepository;
-
-    public ParticipanteService(ParticipanteRepository participanteRepository) {
-        this.participanteRepository = participanteRepository;
-    }
-
     @Autowired
     private ModelMapper modelMapper;
+
+    public ParticipanteService(ParticipanteRepository participanteRepository, ModelMapper modelMapper) {
+        this.participanteRepository = participanteRepository;
+        this.modelMapper = modelMapper;
+    }
+
     public List<Participante> listarParticipantes(){
         return this.participanteRepository.findAll();
     }
@@ -38,20 +41,25 @@ public class ParticipanteService {
         ParticipanteDTOResponse participanteDTOResponse = this.modelMapper.map(participanteDTORequest, ParticipanteDTOResponse.class);
         return participanteDTOResponse;
 
+    }
 
-//        Participante participante = new Participante();
-//        participante.setNome(participanteDTO.getNome());
-//        participante.setEmail(participanteDTO.getEmail());
-//        participante.setIdentificacao(participanteDTO.getIdentificacao());
-//        participante.setEndereco(participanteDTO.getEndereco());
-//        participante.setStatus(participanteDTO.getStatus());
-//        ParticipanteDTOResponse participanteDTOResponse = new ParticipanteDTOResponse();
-//        participanteDTOResponse.setId(participanteSave.getId());
-//        participanteDTOResponse.setNome(participanteSave.getNome());
-//        participanteDTOResponse.setEmail(participanteSave.getEmail());
-//        participanteDTOResponse.setIdentificacao(participanteSave.getIdentificacao());
-//        participanteDTOResponse.setEndereco(participanteSave.getEndereco());
-//        participanteDTOResponse.setStatus(participanteSave.getStatus());
 
+    public ParticipanteDTOResponse atualizarParticipante(Integer participanteId,
+                                                               ParticipanteDTORequest participanteDTOAtualizado) {
+        Participante participanteBuscado = this.listarPorParticipanteId(participanteId);
+        if (participanteBuscado != null){
+            modelMapper.map(participanteDTOAtualizado, participanteBuscado);
+            Participante participanteSalvo = this.participanteRepository.save(participanteBuscado);
+            return modelMapper.map(participanteSalvo, ParticipanteDTOResponse.class);
+        }else{
+            throw new IllegalArgumentException("Id buscado não existe: "+participanteId);
+        }
+    }
+    public ParticipanteDTOUpdateResponse atualizarStatus(Integer participanteId,
+                                                         ParticipanteDTOUpdateRequest participanteStatus) {
+        Participante participanteBuscado = this.listarPorParticipanteId(participanteId);
+        participanteBuscado.setStatus(participanteStatus.getStatus());
+        Participante tempResponse = this.participanteRepository.save(participanteBuscado);
+        return modelMapper.map(tempResponse, ParticipanteDTOUpdateResponse.class);
     }
 }

@@ -15,17 +15,16 @@ import java.util.List;
 @Service
 public class JogoService {
     private JogoRepository jogoRepository;
-
-    public JogoService(JogoRepository jogoRepository) {
+    @Autowired
+    private ModelMapper modelMapper;
+    public JogoService(JogoRepository jogoRepository, ModelMapper modelMapper) {
         this.jogoRepository = jogoRepository;
+        this.modelMapper = modelMapper;
     }
-
     public List<Jogo> listarJogos(){
         return this.jogoRepository.findAll();
     }
 
-    @Autowired
-    private ModelMapper modelMapper;
     public JogoDTOResponse criarJogo(JogoDTORequest jogoDTORequest){
         Jogo jogo = this.modelMapper.map(jogoDTORequest,Jogo.class);
         Jogo jogoSalvo = this.jogoRepository.save(jogo);

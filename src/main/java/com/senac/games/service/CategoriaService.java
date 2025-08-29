@@ -13,22 +13,18 @@ import java.util.List;
 
 @Service
 public class CategoriaService {
-
     private CategoriaRepository categoriaRepository;
-
     private ModelMapper modelMapper;
-
-    public CategoriaService(CategoriaRepository categoriaRepository) {
+    public CategoriaService(CategoriaRepository categoriaRepository, ModelMapper modelMapper) {
         this.categoriaRepository = categoriaRepository;
+        this.modelMapper = modelMapper;
     }
-
     public CategoriaDTOResponse criarCategoria(CategoriaDTORequest categoriaDTORequest){
         Categoria categoria = this.modelMapper.map(categoriaDTORequest,Categoria.class);
         Categoria categoriaSalva = this.categoriaRepository.save(categoria);
         CategoriaDTOResponse categoriaDTOResponse = this.modelMapper.map(categoriaSalva,CategoriaDTOResponse.class);
         return categoriaDTOResponse;
     }
-
     public List<Categoria> listarCategorias(){
         return this.categoriaRepository.findAll();
     }

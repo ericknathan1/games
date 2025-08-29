@@ -22,6 +22,16 @@ public class Jogo {
     @JoinColumn(name="categoria_id", nullable=false)
     private Categoria categoria;
 
+    public Jogo() {
+    }
+
+    public Jogo(int id, String nome, int status, Categoria categoria) {
+        this.id = id;
+        this.nome = nome;
+        this.status = status;
+        this.categoria = categoria;
+    }
+
     public int getId() {
         return id;
     }
