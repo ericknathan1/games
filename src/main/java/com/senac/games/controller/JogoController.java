@@ -28,4 +28,5 @@ public class JogoController {
     public ResponseEntity<List<Jogo>> listarJogos(){
         return ResponseEntity.ok(jogoService.listarJogos());
     }
+
 }
