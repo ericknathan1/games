@@ -26,6 +26,6 @@ public class CategoriaService {
         return categoriaDTOResponse;
     }
     public List<Categoria> listarCategorias(){
-        return this.categoriaRepository.findAll();
+        return this.categoriaRepository.listarCategoria();
     }
 }

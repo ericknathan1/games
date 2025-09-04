@@ -23,7 +23,7 @@ public class PatrocinadorService {
     }
 
     public List<Patrocinador> listarPatrocinadores(){
-        return this.patrocinadorRepository.findAll();
+        return this.patrocinadorRepository.listarPatrocinador();
     }
 
     public PatrocinadorDTOResponse criarPatrocinador(PatrocinadorDTORequest patrocinadorDTORequest){

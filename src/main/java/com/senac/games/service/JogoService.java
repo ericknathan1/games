@@ -22,7 +22,7 @@ public class JogoService {
         this.modelMapper = modelMapper;
     }
     public List<Jogo> listarJogos(){
-        return this.jogoRepository.findAll();
+        return this.jogoRepository.listarJogo();
     }
 
     public JogoDTOResponse criarJogo(JogoDTORequest jogoDTORequest){

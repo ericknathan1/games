@@ -28,11 +28,11 @@ public class ParticipanteService {
     }
 
     public List<Participante> listarParticipantes(){
-        return this.participanteRepository.findAll();
+        return this.participanteRepository.listarParticipante();
     }
 
     public Participante listarPorParticipanteId(Integer participanteId) {
-        return this.participanteRepository.findById(participanteId).orElse(null);
+        return this.participanteRepository.obterParticipantePorId(participanteId);
     }
 
     public ParticipanteDTOResponse criarParticipante(ParticipanteDTORequest participanteDTORequest) {

@@ -28,6 +28,6 @@ public class PremioService {
         return premioDTOResponse;
     }
     public List<Premio> listarPremios(){
-        return this.premioRepository.findAll();
+        return this.premioRepository.listarPremio();
     }
 }
