@@ -28,4 +28,22 @@ public class CategoriaService {
     public List<Categoria> listarCategorias(){
         return this.categoriaRepository.listarCategoria();
     }
+
+    public CategoriaDTOResponse retornarCategoria (Integer id){
+        return  modelMapper.map(this.categoriaRepository.obterCategoriaPorId(id),CategoriaDTOResponse.class);
+    }
+    public CategoriaDTOResponse atualizarCategoria(Integer categoriaId, CategoriaDTORequest request){
+        Categoria categoria = this.categoriaRepository.obterCategoriaPorId(categoriaId);
+        if (categoria != null){
+            modelMapper.map(request,categoria);
+            Categoria categoriaSalvo = this.categoriaRepository.save(categoria);
+            return modelMapper.map(categoriaSalvo,CategoriaDTOResponse.class);
+        }else{
+            throw new IllegalArgumentException("Categoria não existe");
+        }
+    }
+
+    public void apagarCategoria(Integer categoriaId){
+        this.categoriaRepository.apagarCategoria(categoriaId);
+    }
 }

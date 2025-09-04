@@ -5,7 +5,7 @@ import com.senac.games.entity.Categoria;
 public class JogoDTORequest {
     private String nome;
     private int status;
-    private Categoria categoria;
+    private Integer categoriaId;
 
     public String getNome() {
         return nome;
@@ -23,11 +23,11 @@ public class JogoDTORequest {
         this.status = status;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Integer getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoriaId(Integer categoriaId) {
+        this.categoriaId = categoriaId;
     }
 }

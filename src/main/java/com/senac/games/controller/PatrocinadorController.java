@@ -35,5 +35,20 @@ public class PatrocinadorController {
     public ResponseEntity<List<Patrocinador>> listarPatrocinadores(){
         return ResponseEntity.ok(patrocinadorService.listarPatrocinadores());
     }
+    @GetMapping("/listar/{id}")
+    public ResponseEntity<PatrocinadorDTOResponse> retornarPatrocinador(@PathVariable("id")Integer id){
+        return ResponseEntity.ok(patrocinadorService.listarPatrocinadorPorId(id));
+    }
 
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<PatrocinadorDTOResponse> atualizarPatrocinador(@PathVariable("id")Integer id,
+    @RequestBody PatrocinadorDTORequest request){
+        return ResponseEntity.ok(this.patrocinadorService.atualizarPatrocinador(id,request));
+    }
+
+    @DeleteMapping("/apagar/{id}")
+    public ResponseEntity deletarPatrocinador(@PathVariable("id")Integer id){
+        this.patrocinadorService.apagarPatrocinador(id);
+        return ResponseEntity.noContent().build();
+    }
 }

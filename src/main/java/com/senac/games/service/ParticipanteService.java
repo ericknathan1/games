@@ -62,4 +62,8 @@ public class ParticipanteService {
         Participante tempResponse = this.participanteRepository.save(participanteBuscado);
         return modelMapper.map(tempResponse, ParticipanteDTOUpdateResponse.class);
     }
+
+    public void apagarUsuario(Integer participanteId) {
+        this.participanteRepository.apagarParticipante(participanteId);
+    }
 }

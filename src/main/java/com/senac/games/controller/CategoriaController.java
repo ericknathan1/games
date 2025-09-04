@@ -32,9 +32,26 @@ public class CategoriaController {
         return ResponseEntity.ok(categoriaService.listarCategorias());
     }
 
+    @GetMapping("/listar/{id}")
+    public ResponseEntity<CategoriaDTOResponse> listarCategoria(@PathVariable("id") Integer categoriaId){
+        return ResponseEntity.ok(categoriaService.retornarCategoria(categoriaId));
+    }
+
     @PostMapping("/criar")
-    public ResponseEntity<CategoriaDTOResponse> criarCategoria(@Valid @RequestBody CategoriaDTORequest categoria){
+    public ResponseEntity<CategoriaDTOResponse> criarCategoria(@Valid @RequestBody CategoriaDTORequest categoria) {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaService.criarCategoria(categoria));
+    }
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<CategoriaDTOResponse> atualizarCategoria(@PathVariable("id") Integer id, @RequestBody
+    CategoriaDTORequest request){
+        return ResponseEntity.ok(this.categoriaService.atualizarCategoria(id,request));
+    }
+
+    @DeleteMapping("/apagar/{id}")
+    public  ResponseEntity apagarCategoria(@PathVariable("id") Integer id){
+        this.categoriaService.apagarCategoria(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

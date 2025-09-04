@@ -36,4 +36,22 @@ public class PremioController {
     public ResponseEntity<PremioDTOResponse> criarPremio(@Valid @RequestBody PremioDTORequest premio){
         return ResponseEntity.status(HttpStatus.CREATED).body(premioService.criarPremio(premio));
     }
+
+    @GetMapping("/listar/{premioId}")
+    public ResponseEntity<PremioDTOResponse> listarPremioPorId(@PathVariable("premioId")
+                                                               Integer premioId){
+        return ResponseEntity.ok(this.premioService.buscarPremioPorId(premioId));
+    }
+
+    @PutMapping("/atualizar/{premioId}")
+    public ResponseEntity<PremioDTOResponse> atualizarPremio(@PathVariable("premioId") Integer premioId,
+                                                             PremioDTORequest request){
+    return ResponseEntity.ok(this.premioService.atualizarPremio(premioId,request));
+    }
+
+    @DeleteMapping("/deletar/{premioId}")
+    public ResponseEntity deletarPremio(@PathVariable("premioId") Integer premioId){
+        this.premioService.apagarPremio(premioId);
+        return  ResponseEntity.noContent().build();
+    }
 }

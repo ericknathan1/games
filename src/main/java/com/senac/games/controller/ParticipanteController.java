@@ -63,4 +63,11 @@ public class ParticipanteController {
             @RequestBody ParticipanteDTOUpdateRequest participanteStatus){
         return ResponseEntity.ok(this.participanteService.atualizarStatus(participanteId,participanteStatus));
     }
+
+    @DeleteMapping("/apagar/{participanteId}")
+    @Operation(summary = "Deletar um participante", description = "Deleta um participante")
+    public ResponseEntity deletarParticipante(@PathVariable("participanteId") Integer participanteId){
+        this.participanteService.apagarUsuario(participanteId);
+        return ResponseEntity.noContent().build();
+    }
 }

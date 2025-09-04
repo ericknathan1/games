@@ -30,4 +30,24 @@ public class PremioService {
     public List<Premio> listarPremios(){
         return this.premioRepository.listarPremio();
     }
+
+    public PremioDTOResponse buscarPremioPorId(Integer premioId){
+        Premio premioBuscado = this.premioRepository.obterPremioPorId(premioId);
+        PremioDTOResponse response = modelMapper.map(premioBuscado,PremioDTOResponse.class);
+        return response;
+    }
+    public PremioDTOResponse atualizarPremio(Integer premioId, PremioDTORequest request) {
+        Premio premioBuscado = this.premioRepository.obterPremioPorId(premioId);
+        if (premioBuscado != null) {
+            modelMapper.map(request, premioBuscado);
+            Premio premioAtualizado = this.premioRepository.save(premioBuscado);
+            return modelMapper.map(premioAtualizado, PremioDTOResponse.class);
+        }else{
+            throw new IllegalArgumentException("Premio buscado não existe");
+        }
+    }
+
+    public void apagarPremio(Integer premioId) {
+        this.premioRepository.apagarPremio(premioId);
+    }
 }
